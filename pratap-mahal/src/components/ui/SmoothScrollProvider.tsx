@@ -11,13 +11,12 @@ export default function SmoothScrollProvider({ children }: { children: React.Rea
     const lenis = new Lenis({
       // Shorter duration = less lag between input and response
       // Still feels smooth but much more responsive
-      duration: 0.8,
-      easing: (t: number) => 1 - Math.pow(1 - t, 3), // cubic ease-out, snappier
+      duration: 1.2,
+      easing: (t: number) => 1 - Math.pow(1 - t, 4), // quartic ease-out, smoother
       orientation: 'vertical',
       smoothWheel: true,
-      // Lower multiplier = finer control during frame animation
-      wheelMultiplier: 0.8,
-      touchMultiplier: 1.2,
+      wheelMultiplier: 1,
+      touchMultiplier: 1.5,
     });
     lenisRef.current = lenis;
 

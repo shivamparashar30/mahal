@@ -129,10 +129,13 @@ export default function Hero() {
       desynchronized: true,      // hint: don't sync with DOM compositor
     });
     if (!ctx) return;
+    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingQuality = 'high';
     ctxRef.current = ctx;
 
     const updateSize = () => {
-      const dpr = Math.min(window.devicePixelRatio || 1, 2); // cap at 2x for perf
+      // Cap at 1x — source frames are 1280x720, higher DPR just upscales and blurs
+      const dpr = 1;
       const w = window.innerWidth;
       const h = window.innerHeight;
       canvas.width = w * dpr;
@@ -166,7 +169,7 @@ export default function Hero() {
     if (!isLoaded || !sectionRef.current || !canvasRef.current) return;
 
     // Recompute draw cache now that bitmaps are loaded
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const dpr = 1;
     const sampleBitmap = bitmapsRef.current[0];
     if (sampleBitmap) {
       const imgW = 'naturalWidth' in sampleBitmap ? sampleBitmap.naturalWidth : sampleBitmap.width;
@@ -219,7 +222,7 @@ export default function Hero() {
           start: 'top top',
           end: '+=5000',
           pin: true,
-          scrub: 0.15,
+          scrub: 0.6,
           anticipatePin: 1,
         },
       });
@@ -279,7 +282,7 @@ export default function Hero() {
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
-          background: 'linear-gradient(to bottom, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.05) 40%, rgba(0,0,0,0.6) 100%)',
+          background: 'linear-gradient(to bottom, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0) 35%, rgba(0,0,0,0.35) 100%)',
           willChange: 'auto',
         }}
       />
