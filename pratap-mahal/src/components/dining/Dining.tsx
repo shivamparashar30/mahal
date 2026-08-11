@@ -1,116 +1,117 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
-import { gsap, ScrollTrigger } from '@/lib/gsap';
+import { motion } from 'framer-motion';
 
 const restaurants = [
   {
     name: 'Durbar',
     cuisine: 'Royal Indian Fine Dining',
     description:
-      'A regal dining experience beneath crystal chandeliers, featuring centuries-old recipes from the royal kitchens of Rajasthan, reimagined for the modern palate.',
-    hours: '7:00 PM - 11:00 PM',
-    gradient: 'from-amber-900/35 via-orange-950/20 to-stone-950',
+      'Centuries-old recipes from the royal kitchens of Rajasthan, reimagined beneath crystal chandeliers.',
+    hours: '7 PM – 11 PM',
+    accent: '#C4943A',
+    icon: '✦',
   },
   {
     name: 'The Courtyard',
     cuisine: 'Mediterranean & International',
     description:
-      'Al fresco dining in the palace\'s historic central courtyard, surrounded by centuries-old arches and the gentle melody of flowing fountains.',
-    hours: '12:00 PM - 10:30 PM',
-    gradient: 'from-emerald-950/30 via-stone-900/30 to-amber-950/15',
+      'Al fresco dining in the palace\'s historic courtyard, surrounded by centuries-old arches.',
+    hours: '12 PM – 10:30 PM',
+    accent: '#6B9B7D',
+    icon: '❋',
   },
   {
     name: 'Sheesh Mahal',
     cuisine: 'Cocktail Lounge & Bar',
     description:
-      'An intimate lounge adorned with mirror mosaics, offering bespoke cocktails inspired by Rajasthani botanicals and a curated selection of rare spirits.',
-    hours: '5:00 PM - 1:00 AM',
-    gradient: 'from-indigo-950/30 via-purple-950/15 to-stone-950',
+      'Bespoke cocktails inspired by Rajasthani botanicals in an intimate lounge of mirror mosaics.',
+    hours: '5 PM – 1 AM',
+    accent: '#7B6BA0',
+    icon: '◆',
   },
 ];
 
 export default function Dining() {
-  const sectionRef = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    if (!sectionRef.current) return;
-
-    const ctx = gsap.context(() => {
-      gsap.from('[data-dining-heading] > *', {
-        y: 50, opacity: 0, duration: 1.2, stagger: 0.12, ease: 'power3.out',
-        scrollTrigger: { trigger: '[data-dining-heading]', start: 'top 80%' },
-      });
-
-      const cards = gsap.utils.toArray('[data-dining-card]') as HTMLElement[];
-      cards.forEach((card, i) => {
-        gsap.from(card, {
-          y: 60, opacity: 0, duration: 1, delay: i * 0.15, ease: 'power3.out',
-          scrollTrigger: { trigger: card, start: 'top 90%' },
-        });
-      });
-
-      gsap.to('[data-dining-hero]', {
-        yPercent: -15, ease: 'none',
-        scrollTrigger: { trigger: sectionRef.current, start: 'top bottom', end: 'bottom top', scrub: true },
-      });
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, []);
-
   return (
-    <section ref={sectionRef} id="dining" className="relative py-28 md:py-40 lg:py-48 overflow-hidden">
+    <section id="dining" className="relative py-16 md:py-24 lg:py-32 overflow-hidden">
       <div className="absolute top-0 left-0 w-full h-px gold-line" />
 
       <div className="mx-auto max-w-[1400px] px-5 md:px-10 lg:px-12">
-        {/* Hero Image Area */}
-        <div className="relative h-[45vh] md:h-[55vh] mb-16 md:mb-24 overflow-hidden rounded-lg">
-          <div data-dining-hero className="absolute inset-[-15%] bg-gradient-to-br from-amber-900/20 via-stone-900 to-red-950/15" />
-          <div className="absolute inset-0 dot-pattern opacity-30" />
-          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-background/20" />
+        {/* Hero banner */}
+        <div className="relative h-[30vh] md:h-[40vh] mb-10 md:mb-14 overflow-hidden rounded-lg">
+          <div
+            className="absolute inset-0"
+            style={{
+              background: `
+                radial-gradient(ellipse at 35% 35%, rgba(196,148,58,0.12) 0%, transparent 50%),
+                radial-gradient(ellipse at 70% 70%, rgba(140,60,30,0.08) 0%, transparent 45%),
+                linear-gradient(135deg, #1a1408 0%, #0f0c06 50%, #0b0a06 100%)
+              `,
+            }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-background/10" />
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1px] h-16 bg-gradient-to-b from-gold/30 to-transparent" />
+          <div className="absolute top-16 left-1/2 -translate-x-1/2 w-3 h-3 rounded-full border border-gold/20" />
 
-          <div data-dining-heading className="absolute inset-0 flex flex-col items-center justify-center text-center px-6">
-            <span className="section-label block mb-4">Culinary Excellence</span>
-            <h2 className="font-serif text-[clamp(2rem,6vw,5rem)] text-foreground mb-5 leading-[1.1]">
-              A Feast for<br />
-              <span className="text-gradient-gold">the Senses</span>
+          <motion.div
+            initial={{ opacity: 0, y: 25 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ duration: 0.8, ease: [0.23, 1, 0.32, 1] }}
+            className="absolute inset-0 flex flex-col items-center justify-center text-center px-6"
+          >
+            <span className="section-label block mb-3">Culinary Excellence</span>
+            <h2 className="font-serif text-[clamp(1.75rem,6vw,4rem)] text-foreground mb-3 leading-[1.1]">
+              A Feast for <span className="text-gradient-gold">the Senses</span>
             </h2>
-            <p className="text-muted text-sm md:text-base max-w-lg leading-relaxed">
-              Three distinctive dining venues, each a journey through flavour,
-              tradition, and artistry.
+            <p className="text-muted text-sm max-w-md leading-relaxed">
+              Three distinctive venues, each a journey through flavour and artistry.
             </p>
-          </div>
+          </motion.div>
         </div>
 
-        {/* Restaurant Cards */}
-        <div className="grid lg:grid-cols-3 gap-5 lg:gap-6">
-          {restaurants.map((restaurant) => (
-            <div key={restaurant.name} data-dining-card className="luxury-card group">
-              <div className="relative h-48 md:h-56 overflow-hidden rounded-t-[5px]">
-                <div className={`absolute inset-0 bg-gradient-to-br ${restaurant.gradient} group-hover:scale-105 transition-transform duration-700 ease-out`} />
-                <div className="absolute inset-0 dot-pattern opacity-25" />
+        {/* Cards */}
+        <div className="grid md:grid-cols-3 gap-4 lg:gap-5">
+          {restaurants.map((r, i) => (
+            <motion.div
+              key={r.name}
+              initial={{ opacity: 0, y: 35 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-40px' }}
+              transition={{ duration: 0.7, delay: i * 0.1, ease: [0.23, 1, 0.32, 1] }}
+              className="luxury-card group"
+            >
+              <div className="relative h-36 md:h-44 overflow-hidden">
+                <div
+                  className="absolute inset-0 group-hover:scale-105 transition-transform duration-700 ease-out"
+                  style={{
+                    background: `
+                      radial-gradient(ellipse at 50% 40%, ${r.accent}20 0%, transparent 55%),
+                      linear-gradient(135deg, #16140e 0%, #0c0b08 100%)
+                    `,
+                  }}
+                />
                 <div className="absolute inset-0 bg-gradient-to-t from-dark-card to-transparent" />
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <span className="text-2xl text-gold/10 group-hover:text-gold/20 transition-colors duration-500">{r.icon}</span>
+                </div>
               </div>
 
-              <div className="p-6 md:p-7">
-                <span className="text-[10px] tracking-[0.25em] uppercase text-gold/60 block mb-2">
-                  {restaurant.cuisine}
+              <div className="p-5">
+                <span className="text-[8px] tracking-[0.25em] uppercase text-gold/50 block mb-1">
+                  {r.cuisine}
                 </span>
-                <h3 className="font-serif text-xl md:text-2xl text-foreground mb-3">
-                  {restaurant.name}
-                </h3>
-                <p className="text-muted text-sm leading-[1.7] mb-5">
-                  {restaurant.description}
-                </p>
-                <div className="flex items-center justify-between pt-4 border-t border-gold/8">
-                  <span className="text-[11px] text-muted tracking-wider">{restaurant.hours}</span>
-                  <a href="#contact" className="text-[11px] tracking-[0.12em] uppercase text-gold hover:text-gold-light transition-colors">
+                <h3 className="font-serif text-lg text-foreground mb-2">{r.name}</h3>
+                <p className="text-muted text-sm leading-[1.7] mb-4">{r.description}</p>
+                <div className="flex items-center justify-between pt-3 border-t border-gold/8">
+                  <span className="text-[10px] text-muted tracking-wider">{r.hours}</span>
+                  <a href="#contact" className="text-[10px] tracking-[0.12em] uppercase text-gold/60 hover:text-gold transition-colors">
                     Reserve &rarr;
                   </a>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>

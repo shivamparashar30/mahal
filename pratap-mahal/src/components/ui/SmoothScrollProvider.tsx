@@ -9,18 +9,16 @@ export default function SmoothScrollProvider({ children }: { children: React.Rea
 
   useEffect(() => {
     const lenis = new Lenis({
-      // Shorter duration = less lag between input and response
-      // Still feels smooth but much more responsive
-      duration: 1.2,
-      easing: (t: number) => 1 - Math.pow(1 - t, 4), // quartic ease-out, smoother
+      duration: 0.7,
+      easing: (t: number) => 1 - Math.pow(1 - t, 3),
       orientation: 'vertical',
       smoothWheel: true,
-      wheelMultiplier: 1,
-      touchMultiplier: 1.5,
+      wheelMultiplier: 0.9,
+      touchMultiplier: 1.4,
+      autoResize: true,
     });
     lenisRef.current = lenis;
 
-    // Lenis feeds smoothed scroll position to ScrollTrigger
     lenis.on('scroll', ScrollTrigger.update);
 
     const rafCallback = (time: number) => {
@@ -29,7 +27,11 @@ export default function SmoothScrollProvider({ children }: { children: React.Rea
     gsap.ticker.add(rafCallback);
     gsap.ticker.lagSmoothing(0);
 
-    // Smooth anchor scrolling
+    // After initial layout, refresh ScrollTrigger so pin spacers are accounted for
+    const refreshTimer = setTimeout(() => {
+      ScrollTrigger.refresh();
+    }, 100);
+
     const handleAnchorClick = (e: MouseEvent) => {
       const anchor = (e.target as HTMLElement).closest('a[href^="#"]') as HTMLAnchorElement;
       if (!anchor) return;
@@ -38,13 +40,14 @@ export default function SmoothScrollProvider({ children }: { children: React.Rea
       if (!id) return;
       const el = document.querySelector(id);
       if (el) {
-        lenis.scrollTo(el as HTMLElement, { offset: -80, duration: 1.4 });
+        lenis.scrollTo(el as HTMLElement, { offset: -80, duration: 1.2 });
       }
     };
 
     document.addEventListener('click', handleAnchorClick);
 
     return () => {
+      clearTimeout(refreshTimer);
       document.removeEventListener('click', handleAnchorClick);
       gsap.ticker.remove(rafCallback);
       lenis.destroy();

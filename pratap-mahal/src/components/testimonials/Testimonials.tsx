@@ -1,7 +1,7 @@
 'use client';
 
-import { useEffect, useRef, useState, useCallback } from 'react';
-import { gsap, ScrollTrigger } from '@/lib/gsap';
+import { useRef, useState, useCallback, useEffect } from 'react';
+import { motion, useInView } from 'framer-motion';
 
 const testimonials = [
   {
@@ -27,29 +27,11 @@ const testimonials = [
 ];
 
 export default function Testimonials() {
-  const sectionRef = useRef<HTMLElement>(null);
   const sliderRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
+  const headingRef = useRef<HTMLDivElement>(null);
+  const isHeadingInView = useInView(headingRef, { once: true, margin: '-60px' });
 
-  useEffect(() => {
-    if (!sectionRef.current) return;
-
-    const ctx = gsap.context(() => {
-      gsap.from('[data-test-heading] > *', {
-        y: 50, opacity: 0, duration: 1.2, stagger: 0.12, ease: 'power3.out',
-        scrollTrigger: { trigger: '[data-test-heading]', start: 'top 85%' },
-      });
-
-      gsap.from('[data-test-slider]', {
-        y: 30, opacity: 0, duration: 1.2, ease: 'power3.out',
-        scrollTrigger: { trigger: '[data-test-slider]', start: 'top 88%' },
-      });
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, []);
-
-  // Sync scroll position with active index
   useEffect(() => {
     const slider = sliderRef.current;
     if (!slider) return;
@@ -57,7 +39,7 @@ export default function Testimonials() {
     const handleScroll = () => {
       const scrollLeft = slider.scrollLeft;
       const cardWidth = slider.firstElementChild?.clientWidth || 0;
-      const gap = 20;
+      const gap = 16;
       const idx = Math.round(scrollLeft / (cardWidth + gap));
       setActiveIndex(Math.min(idx, testimonials.length - 1));
     };
@@ -77,89 +59,97 @@ export default function Testimonials() {
   }, []);
 
   return (
-    <section ref={sectionRef} id="testimonials" className="relative py-28 md:py-40 lg:py-48 overflow-hidden">
+    <section id="testimonials" className="relative py-16 md:py-24 lg:py-32 overflow-hidden">
       <div className="absolute top-0 left-0 w-full h-px gold-line" />
 
       <div className="mx-auto max-w-[1400px] px-5 md:px-10 lg:px-12">
-        <div data-test-heading className="text-center mb-12 md:mb-20">
-          <span className="section-label block mb-4">Guest Voices</span>
-          <h2 className="font-serif text-[clamp(2rem,5vw,4.5rem)] text-foreground">
+        <motion.div
+          ref={headingRef}
+          initial={{ opacity: 0, y: 30 }}
+          animate={isHeadingInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8, ease: [0.23, 1, 0.32, 1] }}
+          className="text-center mb-10 md:mb-14"
+        >
+          <span className="section-label block mb-3">Guest Voices</span>
+          <h2 className="font-serif text-[clamp(1.75rem,5vw,4rem)] text-foreground">
             Stories of Enchantment
           </h2>
+        </motion.div>
+
+        {/* Slider */}
+        <div
+          ref={sliderRef}
+          className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4 no-scrollbar"
+        >
+          {testimonials.map((t, i) => (
+            <motion.div
+              key={t.name}
+              initial={{ opacity: 0, y: 25 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: i * 0.08 }}
+              onClick={() => goTo(i)}
+              className={`luxury-card flex-none w-[80vw] md:w-[42vw] lg:w-[32vw] snap-center p-6 md:p-8 cursor-pointer transition-all duration-500 ${
+                activeIndex === i ? '!border-gold/15' : ''
+              }`}
+            >
+              {/* Stars */}
+              <div className="flex gap-0.5 mb-4">
+                {[...Array(5)].map((_, j) => (
+                  <svg key={j} width="12" height="12" viewBox="0 0 24 24" fill="currentColor" className="text-gold/70">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                  </svg>
+                ))}
+              </div>
+
+              <blockquote className="font-serif text-sm md:text-base text-foreground/75 leading-[1.7] mb-6 italic">
+                &ldquo;{t.quote}&rdquo;
+              </blockquote>
+
+              <div className="pt-4 border-t border-gold/8">
+                <p className="text-sm text-foreground/90 tracking-wide mb-0.5">{t.name}</p>
+                <p className="text-[11px] text-muted tracking-wider">{t.location}</p>
+              </div>
+            </motion.div>
+          ))}
         </div>
 
-        <div data-test-slider>
-          {/* Slider */}
-          <div
-            ref={sliderRef}
-            className="flex gap-5 overflow-x-auto snap-x snap-mandatory pb-6 no-scrollbar"
+        {/* Dots + Arrows */}
+        <div className="flex items-center justify-center gap-6 mt-6">
+          <button
+            onClick={() => goTo(Math.max(0, activeIndex - 1))}
+            disabled={activeIndex === 0}
+            className="w-8 h-8 rounded-full border border-gold/15 flex items-center justify-center text-gold/50 hover:text-gold hover:border-gold/30 disabled:opacity-20 disabled:cursor-default transition-all"
+            aria-label="Previous"
           >
-            {testimonials.map((t, i) => (
-              <div
-                key={t.name}
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+              <polyline points="15 18 9 12 15 6" />
+            </svg>
+          </button>
+
+          <div className="flex gap-1.5">
+            {testimonials.map((_, i) => (
+              <button
+                key={i}
                 onClick={() => goTo(i)}
-                className={`luxury-card flex-none w-[82vw] md:w-[42vw] lg:w-[33vw] snap-center p-7 md:p-10 cursor-pointer transition-all duration-500 ${
-                  activeIndex === i ? '!border-gold/15' : ''
+                className={`h-1 rounded-full transition-all duration-500 ${
+                  activeIndex === i ? 'bg-gold w-6' : 'bg-gold/15 w-1.5 hover:bg-gold/30'
                 }`}
-              >
-                {/* Stars */}
-                <div className="flex gap-1 mb-6">
-                  {[...Array(5)].map((_, j) => (
-                    <svg key={j} width="14" height="14" viewBox="0 0 24 24" fill="currentColor" className="text-gold/70">
-                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-                    </svg>
-                  ))}
-                </div>
-
-                <blockquote className="font-serif text-base md:text-lg text-foreground/75 leading-[1.7] mb-8 italic">
-                  &ldquo;{t.quote}&rdquo;
-                </blockquote>
-
-                <div className="pt-5 border-t border-gold/8">
-                  <p className="text-sm text-foreground/90 tracking-wide mb-0.5">{t.name}</p>
-                  <p className="text-xs text-muted tracking-wider">{t.location}</p>
-                </div>
-              </div>
+                aria-label={`Testimonial ${i + 1}`}
+              />
             ))}
           </div>
 
-          {/* Dots + Arrows */}
-          <div className="flex items-center justify-center gap-8 mt-8">
-            <button
-              onClick={() => goTo(Math.max(0, activeIndex - 1))}
-              disabled={activeIndex === 0}
-              className="w-9 h-9 rounded-full border border-gold/15 flex items-center justify-center text-gold/50 hover:text-gold hover:border-gold/30 disabled:opacity-20 disabled:cursor-default transition-all"
-              aria-label="Previous"
-            >
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                <polyline points="15 18 9 12 15 6" />
-              </svg>
-            </button>
-
-            <div className="flex gap-2">
-              {testimonials.map((_, i) => (
-                <button
-                  key={i}
-                  onClick={() => goTo(i)}
-                  className={`h-1.5 rounded-full transition-all duration-500 ${
-                    activeIndex === i ? 'bg-gold w-7' : 'bg-gold/15 w-1.5 hover:bg-gold/30'
-                  }`}
-                  aria-label={`Testimonial ${i + 1}`}
-                />
-              ))}
-            </div>
-
-            <button
-              onClick={() => goTo(Math.min(testimonials.length - 1, activeIndex + 1))}
-              disabled={activeIndex === testimonials.length - 1}
-              className="w-9 h-9 rounded-full border border-gold/15 flex items-center justify-center text-gold/50 hover:text-gold hover:border-gold/30 disabled:opacity-20 disabled:cursor-default transition-all"
-              aria-label="Next"
-            >
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                <polyline points="9 18 15 12 9 6" />
-              </svg>
-            </button>
-          </div>
+          <button
+            onClick={() => goTo(Math.min(testimonials.length - 1, activeIndex + 1))}
+            disabled={activeIndex === testimonials.length - 1}
+            className="w-8 h-8 rounded-full border border-gold/15 flex items-center justify-center text-gold/50 hover:text-gold hover:border-gold/30 disabled:opacity-20 disabled:cursor-default transition-all"
+            aria-label="Next"
+          >
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+              <polyline points="9 18 15 12 9 6" />
+            </svg>
+          </button>
         </div>
       </div>
     </section>
