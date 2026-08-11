@@ -106,7 +106,7 @@ export default function Testimonials() {
                 &ldquo;{t.quote}&rdquo;
               </blockquote>
 
-              <div className="pt-4 border-t border-gold/8">
+              <div className="pt-4 border-t border-gold/[0.08]">
                 <p className="text-sm text-foreground/90 tracking-wide mb-0.5">{t.name}</p>
                 <p className="text-[11px] text-muted tracking-wider">{t.location}</p>
               </div>

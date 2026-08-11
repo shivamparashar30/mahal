@@ -43,7 +43,7 @@ export default function About() {
             className="relative"
           >
             <div className="absolute -left-3 md:-left-5 top-0 w-[1px] h-full bg-gradient-to-b from-gold via-gold/20 to-transparent" />
-            <div className="relative overflow-hidden aspect-[4/5] lg:aspect-[3/4] rounded-md bg-dark-card">
+            <div className="relative overflow-hidden aspect-[4/3] md:aspect-[4/5] lg:aspect-[3/4] rounded-md bg-dark-card">
               <div
                 className="absolute inset-0"
                 style={{
@@ -107,7 +107,7 @@ export default function About() {
         {/* Stats */}
         <div
           ref={statsRef}
-          className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 mt-14 md:mt-20 pt-8 border-t border-gold/8"
+          className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 mt-10 md:mt-20 pt-6 md:pt-8 border-t border-gold/[0.08]"
         >
           {stats.map((stat, i) => (
             <motion.div

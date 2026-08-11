@@ -55,7 +55,7 @@ export default function Contact() {
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div>
                 <span className="text-[9px] tracking-[0.25em] uppercase text-gold/60 block mb-2">Address</span>
                 <p className="text-foreground/65 text-sm leading-[1.8]">
@@ -81,7 +81,7 @@ export default function Contact() {
             transition={{ duration: 0.8, delay: 0.1, ease: [0.23, 1, 0.32, 1] }}
           >
             <form onSubmit={(e) => e.preventDefault()} className="flex flex-col gap-4">
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="flex flex-col gap-1">
                   <label className="text-[9px] tracking-[0.25em] uppercase text-gold/60">Full Name</label>
                   <input type="text" className="luxury-input" placeholder="Your name" />
@@ -92,7 +92,7 @@ export default function Contact() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="flex flex-col gap-1">
                   <label className="text-[9px] tracking-[0.25em] uppercase text-gold/60">Check-in</label>
                   <input type="date" className="luxury-input" />
@@ -103,7 +103,7 @@ export default function Contact() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="flex flex-col gap-1">
                   <label className="text-[9px] tracking-[0.25em] uppercase text-gold/60">Phone</label>
                   <input type="tel" className="luxury-input" placeholder="+91 XXXXX XXXXX" />

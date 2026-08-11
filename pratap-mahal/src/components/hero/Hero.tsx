@@ -41,7 +41,7 @@ export default function Hero() {
     return () => clearTimeout(fallback);
   }, []);
 
-  // Draw a frame on the canvas
+  // Draw a frame on the canvas with cover-fit (preserves aspect ratio, crops to fill)
   const drawFrame = useCallback((frameIndex: number) => {
     if (frameIndex === drawnFrameRef.current) return;
     const canvas = canvasRef.current;
@@ -51,7 +51,23 @@ export default function Hero() {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+    const imgAspect = img.naturalWidth / img.naturalHeight;
+    const canvasAspect = canvas.width / canvas.height;
+
+    let sx, sy, sw, sh;
+    if (canvasAspect > imgAspect) {
+      sw = img.naturalWidth;
+      sh = img.naturalWidth / canvasAspect;
+      sx = 0;
+      sy = (img.naturalHeight - sh) / 2;
+    } else {
+      sh = img.naturalHeight;
+      sw = img.naturalHeight * canvasAspect;
+      sx = (img.naturalWidth - sw) / 2;
+      sy = 0;
+    }
+
+    ctx.drawImage(img, sx, sy, sw, sh, 0, 0, canvas.width, canvas.height);
     drawnFrameRef.current = frameIndex;
   }, []);
 
@@ -113,7 +129,7 @@ export default function Hero() {
   }, [isLoaded, drawFrame]);
 
   return (
-    <section id="hero" ref={sectionRef} className="relative h-[400vh] w-full">
+    <section id="hero" ref={sectionRef} className="relative h-[250vh] md:h-[400vh] w-full">
       {/* Sticky viewport — pinned via CSS, no ScrollTrigger pin */}
       <div className="sticky top-0 h-screen w-full overflow-hidden">
         <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" />
@@ -163,7 +179,7 @@ export default function Hero() {
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.3, ease: [0.23, 1, 0.32, 1] }}
-              className="text-[11px] md:text-[12px] tracking-[0.35em] uppercase text-white/80 font-light mb-4 block"
+              className="text-[10px] md:text-[12px] tracking-[0.3em] md:tracking-[0.35em] uppercase text-white/80 font-light mb-2 md:mb-4 block"
               style={{ textShadow: '0 2px 12px rgba(0,0,0,0.8)' }}
             >
               A Taj Hotel
@@ -173,7 +189,7 @@ export default function Hero() {
               initial={{ opacity: 0, y: 25 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 0.5, ease: [0.23, 1, 0.32, 1] }}
-              className="font-serif text-[clamp(2.5rem,8vw,7rem)] leading-[0.95] tracking-[0.02em] text-white mb-4"
+              className="font-serif text-[clamp(2rem,8vw,7rem)] leading-[0.95] tracking-[0.02em] text-white mb-2 md:mb-4"
               style={{ textShadow: '0 4px 30px rgba(0,0,0,0.7), 0 1px 8px rgba(0,0,0,0.5)' }}
             >
               Pratap Mahal
@@ -183,14 +199,14 @@ export default function Hero() {
               initial={{ scaleX: 0 }}
               animate={{ scaleX: 1 }}
               transition={{ duration: 0.8, delay: 0.9, ease: [0.23, 1, 0.32, 1] }}
-              className="w-14 h-[1px] bg-gradient-to-r from-transparent via-gold to-transparent mb-4"
+              className="w-10 md:w-14 h-[1px] bg-gradient-to-r from-transparent via-gold to-transparent mb-2 md:mb-4"
             />
 
             <motion.p
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 1.1, ease: [0.23, 1, 0.32, 1] }}
-              className="font-serif text-[clamp(0.9rem,2.5vw,1.4rem)] text-white/80 tracking-[0.05em] font-light mb-10"
+              className="font-serif text-[clamp(0.85rem,2.5vw,1.4rem)] text-white/80 tracking-[0.05em] font-light mb-6 md:mb-10"
               style={{ textShadow: '0 2px 16px rgba(0,0,0,0.8)' }}
             >
               Royal Heritage. Modern Luxury.

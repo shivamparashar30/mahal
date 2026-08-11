@@ -63,7 +63,7 @@ export default function Footer() {
             ))}
           </div>
 
-          <div className="pt-5 border-t border-gold/6 flex flex-col md:flex-row items-center justify-between gap-2">
+          <div className="pt-5 border-t border-gold/[0.06] flex flex-col md:flex-row items-center justify-between gap-2">
             <p className="text-[10px] text-muted/50 tracking-wider">
               &copy; {new Date().getFullYear()} Pratap Mahal by Taj Hotels. All rights reserved.
             </p>

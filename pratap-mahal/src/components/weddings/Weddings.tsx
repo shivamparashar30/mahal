@@ -32,7 +32,7 @@ export default function Weddings() {
       <div className="absolute top-0 left-0 w-full h-px gold-line" />
 
       {/* Hero */}
-      <div className="relative flex items-center justify-center overflow-hidden py-20 md:py-28 lg:py-32">
+      <div className="relative flex items-center justify-center overflow-hidden py-14 md:py-28 lg:py-32">
         <div
           className="absolute inset-0"
           style={{

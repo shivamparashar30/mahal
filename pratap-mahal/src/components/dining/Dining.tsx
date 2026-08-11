@@ -104,7 +104,7 @@ export default function Dining() {
                 </span>
                 <h3 className="font-serif text-lg text-foreground mb-2">{r.name}</h3>
                 <p className="text-muted text-sm leading-[1.7] mb-4">{r.description}</p>
-                <div className="flex items-center justify-between pt-3 border-t border-gold/8">
+                <div className="flex items-center justify-between pt-3 border-t border-gold/[0.08]">
                   <span className="text-[10px] text-muted tracking-wider">{r.hours}</span>
                   <a href="#contact" className="text-[10px] tracking-[0.12em] uppercase text-gold/60 hover:text-gold transition-colors">
                     Reserve &rarr;

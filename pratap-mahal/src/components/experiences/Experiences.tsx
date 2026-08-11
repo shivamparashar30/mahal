@@ -98,7 +98,7 @@ export default function Experiences() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-30px' }}
               transition={{ duration: 0.6, delay: (i % 3) * 0.08, ease: [0.23, 1, 0.32, 1] }}
-              className="luxury-card group relative p-5 md:p-7"
+              className="luxury-card group relative p-3.5 sm:p-5 md:p-7"
             >
               <div className="absolute inset-0 rounded-[6px] bg-gradient-to-br from-gold/0 to-gold/0 group-hover:from-gold/4 group-hover:to-transparent transition-all duration-500 pointer-events-none" />
 
