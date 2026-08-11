@@ -62,7 +62,7 @@ export default function Navbar() {
       <nav
         ref={navRef}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out ${
-          isScrolled ? 'glass-strong py-3' : 'py-5 md:py-6'
+          isScrolled ? 'glass-strong pt-3 pb-3' : 'pt-7 pb-5 md:pt-8 md:pb-6'
         }`}
       >
         <div className="mx-auto max-w-[1400px] px-5 md:px-10 lg:px-12 flex items-center justify-between">

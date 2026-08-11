@@ -9,13 +9,12 @@ export default function SmoothScrollProvider({ children }: { children: React.Rea
 
   useEffect(() => {
     const lenis = new Lenis({
-      duration: 0.7,
+      duration: 0.9,
       easing: (t: number) => 1 - Math.pow(1 - t, 3),
       orientation: 'vertical',
       smoothWheel: true,
-      wheelMultiplier: 0.9,
-      touchMultiplier: 1.4,
-      autoResize: true,
+      wheelMultiplier: 1,
+      touchMultiplier: 1.5,
     });
     lenisRef.current = lenis;
 
@@ -26,11 +25,6 @@ export default function SmoothScrollProvider({ children }: { children: React.Rea
     };
     gsap.ticker.add(rafCallback);
     gsap.ticker.lagSmoothing(0);
-
-    // After initial layout, refresh ScrollTrigger so pin spacers are accounted for
-    const refreshTimer = setTimeout(() => {
-      ScrollTrigger.refresh();
-    }, 100);
 
     const handleAnchorClick = (e: MouseEvent) => {
       const anchor = (e.target as HTMLElement).closest('a[href^="#"]') as HTMLAnchorElement;
@@ -47,7 +41,6 @@ export default function SmoothScrollProvider({ children }: { children: React.Rea
     document.addEventListener('click', handleAnchorClick);
 
     return () => {
-      clearTimeout(refreshTimer);
       document.removeEventListener('click', handleAnchorClick);
       gsap.ticker.remove(rafCallback);
       lenis.destroy();
