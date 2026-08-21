@@ -9,8 +9,7 @@ const restaurants = [
     description:
       'Centuries-old recipes from the royal kitchens of Rajasthan, reimagined beneath crystal chandeliers.',
     hours: '7 PM – 11 PM',
-    accent: '#C4943A',
-    icon: '✦',
+    image: '/images/dining-durbar.jpg',
   },
   {
     name: 'The Courtyard',
@@ -18,8 +17,7 @@ const restaurants = [
     description:
       'Al fresco dining in the palace\'s historic courtyard, surrounded by centuries-old arches.',
     hours: '12 PM – 10:30 PM',
-    accent: '#6B9B7D',
-    icon: '❋',
+    image: '/images/dining-hall.jpg',
   },
   {
     name: 'Sheesh Mahal',
@@ -27,19 +25,18 @@ const restaurants = [
     description:
       'Bespoke cocktails inspired by Rajasthani botanicals in an intimate lounge of mirror mosaics.',
     hours: '5 PM – 1 AM',
-    accent: '#7B6BA0',
-    icon: '◆',
+    image: null,
   },
 ];
 
 export default function Dining() {
   return (
-    <section id="dining" className="relative py-16 md:py-24 lg:py-32 overflow-hidden">
+    <section id="dining" className="relative py-10 md:py-24 lg:py-32 overflow-hidden">
       <div className="absolute top-0 left-0 w-full h-px gold-line" />
 
       <div className="mx-auto max-w-[1400px] px-5 md:px-10 lg:px-12">
         {/* Hero banner */}
-        <div className="relative h-[30vh] md:h-[40vh] mb-10 md:mb-14 overflow-hidden rounded-lg">
+        <div className="relative h-[22vh] md:h-[40vh] mb-6 md:mb-14 overflow-hidden rounded-lg">
           <div
             className="absolute inset-0"
             style={{
@@ -82,28 +79,29 @@ export default function Dining() {
               transition={{ duration: 0.7, delay: i * 0.1, ease: [0.23, 1, 0.32, 1] }}
               className="luxury-card group"
             >
-              <div className="relative h-36 md:h-44 overflow-hidden">
-                <div
-                  className="absolute inset-0 group-hover:scale-105 transition-transform duration-700 ease-out"
-                  style={{
-                    background: `
-                      radial-gradient(ellipse at 50% 40%, ${r.accent}20 0%, transparent 55%),
-                      linear-gradient(135deg, #16140e 0%, #0c0b08 100%)
-                    `,
-                  }}
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-dark-card to-transparent" />
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="text-2xl text-gold/10 group-hover:text-gold/20 transition-colors duration-500">{r.icon}</span>
-                </div>
+              <div className="relative h-32 md:h-44 overflow-hidden">
+                {r.image ? (
+                  <img
+                    src={r.image}
+                    alt={r.name}
+                    className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                    loading="lazy"
+                  />
+                ) : (
+                  <div
+                    className="absolute inset-0 group-hover:scale-105 transition-transform duration-700 ease-out"
+                    style={{ background: 'radial-gradient(ellipse at 50% 40%, rgba(123,107,160,0.15) 0%, transparent 55%), linear-gradient(135deg, #16140e 0%, #0c0b08 100%)' }}
+                  />
+                )}
+                <div className="absolute inset-0 bg-gradient-to-t from-dark-card via-transparent to-transparent" />
               </div>
 
-              <div className="p-5">
+              <div className="p-4 md:p-5">
                 <span className="text-[8px] tracking-[0.25em] uppercase text-gold/50 block mb-1">
                   {r.cuisine}
                 </span>
                 <h3 className="font-serif text-lg text-foreground mb-2">{r.name}</h3>
-                <p className="text-muted text-sm leading-[1.7] mb-4">{r.description}</p>
+                <p className="text-muted text-[13px] md:text-sm leading-[1.7] mb-3 md:mb-4">{r.description}</p>
                 <div className="flex items-center justify-between pt-3 border-t border-gold/[0.08]">
                   <span className="text-[10px] text-muted tracking-wider">{r.hours}</span>
                   <a href="#contact" className="text-[10px] tracking-[0.12em] uppercase text-gold/60 hover:text-gold transition-colors">

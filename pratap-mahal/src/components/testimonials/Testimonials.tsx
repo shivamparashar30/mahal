@@ -59,7 +59,7 @@ export default function Testimonials() {
   }, []);
 
   return (
-    <section id="testimonials" className="relative py-16 md:py-24 lg:py-32 overflow-hidden">
+    <section id="testimonials" className="relative py-10 md:py-24 lg:py-32 overflow-hidden">
       <div className="absolute top-0 left-0 w-full h-px gold-line" />
 
       <div className="mx-auto max-w-[1400px] px-5 md:px-10 lg:px-12">
@@ -68,7 +68,7 @@ export default function Testimonials() {
           initial={{ opacity: 0, y: 30 }}
           animate={isHeadingInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, ease: [0.23, 1, 0.32, 1] }}
-          className="text-center mb-10 md:mb-14"
+          className="text-center mb-6 md:mb-14"
         >
           <span className="section-label block mb-3">Guest Voices</span>
           <h2 className="font-serif text-[clamp(1.75rem,5vw,4rem)] text-foreground">
@@ -89,12 +89,12 @@ export default function Testimonials() {
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: i * 0.08 }}
               onClick={() => goTo(i)}
-              className={`luxury-card flex-none w-[80vw] md:w-[42vw] lg:w-[32vw] snap-center p-6 md:p-8 cursor-pointer transition-all duration-500 ${
+              className={`luxury-card flex-none w-[82vw] md:w-[42vw] lg:w-[32vw] snap-center p-4 md:p-8 cursor-pointer transition-all duration-500 ${
                 activeIndex === i ? '!border-gold/15' : ''
               }`}
             >
               {/* Stars */}
-              <div className="flex gap-0.5 mb-4">
+              <div className="flex gap-0.5 mb-3 md:mb-4">
                 {[...Array(5)].map((_, j) => (
                   <svg key={j} width="12" height="12" viewBox="0 0 24 24" fill="currentColor" className="text-gold/70">
                     <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
@@ -102,7 +102,7 @@ export default function Testimonials() {
                 ))}
               </div>
 
-              <blockquote className="font-serif text-sm md:text-base text-foreground/75 leading-[1.7] mb-6 italic">
+              <blockquote className="font-serif text-[13px] md:text-base text-foreground/75 leading-[1.7] mb-4 md:mb-6 italic">
                 &ldquo;{t.quote}&rdquo;
               </blockquote>
 

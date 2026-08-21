@@ -69,7 +69,7 @@ export default function Experiences() {
   const isHeadingInView = useInView(headingRef, { once: true, margin: '-60px' });
 
   return (
-    <section id="experiences" className="relative py-16 md:py-24 lg:py-32 overflow-hidden">
+    <section id="experiences" className="relative py-10 md:py-24 lg:py-32 overflow-hidden">
       <div className="absolute top-0 left-0 w-full h-px gold-line" />
 
       <div className="mx-auto max-w-[1400px] px-5 md:px-10 lg:px-12">
@@ -78,7 +78,7 @@ export default function Experiences() {
           initial={{ opacity: 0, y: 35 }}
           animate={isHeadingInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, ease: [0.23, 1, 0.32, 1] }}
-          className="text-center mb-10 md:mb-16"
+          className="text-center mb-6 md:mb-16"
         >
           <span className="section-label block mb-3">Curated for You</span>
           <h2 className="font-serif text-[clamp(1.75rem,5vw,4rem)] text-foreground mb-4">
@@ -90,7 +90,7 @@ export default function Experiences() {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4 lg:gap-5">
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-2.5 md:gap-4 lg:gap-5">
           {experiences.map((exp, i) => (
             <motion.div
               key={exp.title}
@@ -103,12 +103,12 @@ export default function Experiences() {
               <div className="absolute inset-0 rounded-[6px] bg-gradient-to-br from-gold/0 to-gold/0 group-hover:from-gold/4 group-hover:to-transparent transition-all duration-500 pointer-events-none" />
 
               <div className="relative">
-                <div className="text-gold mb-4 group-hover:scale-110 transition-transform duration-500 origin-left">
+                <div className="text-gold mb-2 md:mb-4 [&_svg]:w-5 [&_svg]:h-5 md:[&_svg]:w-7 md:[&_svg]:h-7 group-hover:scale-110 transition-transform duration-500 origin-left">
                   {exp.icon}
                 </div>
-                <h3 className="font-serif text-base md:text-lg text-foreground mb-2">{exp.title}</h3>
-                <p className="text-muted text-xs md:text-sm leading-[1.7] mb-3">{exp.description}</p>
-                <span className="text-[10px] tracking-[0.15em] uppercase text-gold/50 group-hover:text-gold transition-colors duration-400">
+                <h3 className="font-serif text-sm md:text-lg text-foreground mb-1 md:mb-2">{exp.title}</h3>
+                <p className="text-muted text-[11px] md:text-sm leading-[1.6] md:leading-[1.7] mb-2 md:mb-3">{exp.description}</p>
+                <span className="text-[9px] md:text-[10px] tracking-[0.15em] uppercase text-gold/50 group-hover:text-gold transition-colors duration-400">
                   Learn More &rarr;
                 </span>
               </div>

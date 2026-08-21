@@ -1,21 +1,69 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+import { useEffect, useRef, useState } from 'react';
+import { AnimatePresence, motion, useScroll, useTransform } from 'framer-motion';
 
 const galleryItems = [
-  { title: 'The Grand Entrance', category: 'Architecture', gradient: 'radial-gradient(ellipse at 35% 40%, rgba(180,140,60,0.18) 0%, transparent 55%), linear-gradient(135deg, #1a1508 0%, #0f0d08 100%)' },
-  { title: 'Royal Suite Interior', category: 'Rooms', gradient: 'radial-gradient(ellipse at 55% 35%, rgba(160,130,90,0.14) 0%, transparent 55%), linear-gradient(135deg, #15130e 0%, #0e0c08 100%)' },
-  { title: 'Palace at Sunset', category: 'Exterior', gradient: 'radial-gradient(ellipse at 60% 50%, rgba(200,120,60,0.16) 0%, transparent 55%), linear-gradient(135deg, #1a1208 0%, #100c06 100%)' },
-  { title: 'Durbar Dining Hall', category: 'Dining', gradient: 'radial-gradient(ellipse at 40% 45%, rgba(160,80,40,0.14) 0%, transparent 55%), linear-gradient(135deg, #18100a 0%, #0e0a06 100%)' },
-  { title: 'The Lotus Pool', category: 'Leisure', gradient: 'radial-gradient(ellipse at 50% 40%, rgba(60,140,160,0.12) 0%, transparent 55%), linear-gradient(135deg, #0e1415 0%, #0a0e0f 100%)' },
-  { title: 'Heritage Courtyard', category: 'Architecture', gradient: 'radial-gradient(ellipse at 45% 50%, rgba(170,140,70,0.14) 0%, transparent 55%), linear-gradient(135deg, #16140e 0%, #0e0c08 100%)' },
+  { title: 'The Grand Entrance', category: 'Architecture', image: '/images/gallery-entrance.jpg', aspect: 'aspect-[2/3]' },
+  { title: 'Royal Suite Interior', category: 'Rooms', image: '/images/gallery-suite.jpg', aspect: 'aspect-[2/3]' },
+  { title: 'Heritage Courtyard', category: 'Architecture', image: '/images/gallery-courtyard.jpg', aspect: 'aspect-[2/3]' },
+  { title: 'Durbar Dining Hall', category: 'Dining', image: '/images/dining-hall.jpg', aspect: 'aspect-[3/4]' },
+  { title: 'The Lotus Pool', category: 'Leisure', image: '/images/gallery-pool.jpg', aspect: 'aspect-[4/5]' },
+  { title: 'Palace Chamber', category: 'Rooms', image: '/images/gallery-room.jpg', aspect: 'aspect-[4/5]' },
 ];
 
-const heights = ['h-48 md:h-64', 'h-56 md:h-72', 'h-44 md:h-56', 'h-52 md:h-68', 'h-56 md:h-72', 'h-48 md:h-60'];
+// Desktop masonry heights — varied for visual interest
+const desktopHeights = ['h-[340px] lg:h-[420px]', 'h-[280px] lg:h-[360px]', 'h-[300px] lg:h-[380px]', 'h-[260px] lg:h-[340px]', 'h-[300px] lg:h-[380px]', 'h-[280px] lg:h-[340px]'];
+
+function GalleryCard({ item, index, onClick }: { item: typeof galleryItems[0]; index: number; onClick: () => void }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ['start end', 'end start'],
+  });
+  const y = useTransform(scrollYProgress, [0, 1], [30, -30]);
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-40px' }}
+      transition={{ duration: 0.7, delay: (index % 3) * 0.1, ease: [0.23, 1, 0.32, 1] }}
+      onClick={onClick}
+      className={`group relative ${desktopHeights[index]} overflow-hidden cursor-pointer break-inside-avoid mb-4 rounded-md bg-dark-card`}
+    >
+      <motion.div className="absolute inset-0" style={{ y }}>
+        <img
+          src={item.image}
+          alt={item.title}
+          className="w-full h-[120%] object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+          loading="lazy"
+        />
+      </motion.div>
+
+      {/* Hover overlay */}
+      <div className="absolute inset-0 bg-gradient-to-t from-background/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+      {/* Always-visible subtle bottom gradient */}
+      <div className="absolute bottom-0 left-0 right-0 h-1/3 bg-gradient-to-t from-background/50 to-transparent" />
+
+      {/* Info — slides up on hover */}
+      <div className="absolute bottom-0 left-0 right-0 p-4 md:p-5 translate-y-2 group-hover:translate-y-0 transition-transform duration-500 ease-out">
+        <span className="text-[9px] tracking-[0.25em] uppercase text-gold block mb-0.5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
+          {item.category}
+        </span>
+        <h4 className="font-serif text-sm md:text-base text-white opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-150">
+          {item.title}
+        </h4>
+      </div>
+    </motion.div>
+  );
+}
 
 export default function Gallery() {
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+  const sliderRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (lightboxIndex !== null) {
@@ -27,7 +75,7 @@ export default function Gallery() {
   }, [lightboxIndex]);
 
   return (
-    <section id="gallery" className="relative py-16 md:py-24 lg:py-32 overflow-hidden">
+    <section id="gallery" className="relative py-10 md:py-24 lg:py-32 overflow-hidden">
       <div className="absolute top-0 left-0 w-full h-px gold-line" />
 
       <div className="mx-auto max-w-[1400px] px-5 md:px-10 lg:px-12">
@@ -36,7 +84,7 @@ export default function Gallery() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-60px' }}
           transition={{ duration: 0.8, ease: [0.23, 1, 0.32, 1] }}
-          className="text-center mb-10 md:mb-16"
+          className="text-center mb-6 md:mb-16"
         >
           <span className="section-label block mb-3">Visual Journey</span>
           <h2 className="font-serif text-[clamp(1.75rem,5vw,4rem)] text-foreground mb-4">The Gallery</h2>
@@ -45,32 +93,46 @@ export default function Gallery() {
           </p>
         </motion.div>
 
-        {/* Grid */}
-        <div className="columns-2 lg:columns-3 gap-3 md:gap-4">
+        {/* Mobile/Tablet: Horizontal scroll */}
+        <div
+          ref={sliderRef}
+          className="flex gap-3 overflow-x-auto snap-x snap-mandatory pb-4 no-scrollbar lg:hidden -mx-5 px-5"
+        >
           {galleryItems.map((item, i) => (
             <motion.div
               key={item.title}
-              initial={{ opacity: 0, y: 25 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-20px' }}
-              transition={{ duration: 0.6, delay: (i % 3) * 0.06, ease: [0.23, 1, 0.32, 1] }}
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: i * 0.08 }}
               onClick={() => setLightboxIndex(i)}
-              className={`group relative ${heights[i]} mb-3 md:mb-4 overflow-hidden cursor-pointer break-inside-avoid rounded-md bg-dark-card img-placeholder`}
+              className="flex-none w-[72vw] sm:w-[55vw] md:w-[42vw] snap-center cursor-pointer group"
             >
-              <div
-                className="absolute inset-0 group-hover:scale-110 transition-transform duration-700 ease-out"
-                style={{ background: item.gradient }}
-              />
-              <div className="absolute inset-0 dot-pattern opacity-20" />
-
-              {/* Hover overlay */}
-              <div className="absolute inset-0 bg-background/0 group-hover:bg-background/50 transition-all duration-500 flex items-end">
-                <div className="p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out">
-                  <span className="text-[9px] tracking-[0.25em] uppercase text-gold block mb-0.5">{item.category}</span>
-                  <h4 className="font-serif text-sm text-foreground">{item.title}</h4>
+              <div className={`relative ${item.aspect} overflow-hidden rounded-md bg-dark-card`}>
+                <img
+                  src={item.image}
+                  alt={item.title}
+                  className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  loading="lazy"
+                />
+                <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-background/80 to-transparent">
+                  <span className="text-[8px] tracking-[0.25em] uppercase text-gold block mb-0.5">{item.category}</span>
+                  <h4 className="font-serif text-sm text-white">{item.title}</h4>
                 </div>
               </div>
             </motion.div>
+          ))}
+        </div>
+
+        {/* Desktop: Masonry with parallax */}
+        <div className="hidden lg:block columns-3 gap-4">
+          {galleryItems.map((item, i) => (
+            <GalleryCard
+              key={item.title}
+              item={item}
+              index={i}
+              onClick={() => setLightboxIndex(i)}
+            />
           ))}
         </div>
       </div>
@@ -92,11 +154,14 @@ export default function Gallery() {
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.92, opacity: 0 }}
               transition={{ duration: 0.35, ease: [0.23, 1, 0.32, 1] }}
-              className="relative w-[90vw] max-w-4xl aspect-video bg-dark-card rounded-lg overflow-hidden"
+              className="relative w-[90vw] max-w-3xl max-h-[85vh] bg-dark-card rounded-lg overflow-hidden"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="absolute inset-0" style={{ background: galleryItems[lightboxIndex].gradient }} />
-              <div className="absolute inset-0 dot-pattern opacity-20" />
+              <img
+                src={galleryItems[lightboxIndex].image}
+                alt={galleryItems[lightboxIndex].title}
+                className="w-full h-full object-contain"
+              />
               <div className="absolute bottom-0 left-0 right-0 p-5 md:p-7 bg-gradient-to-t from-background/85 to-transparent">
                 <span className="text-[9px] tracking-[0.25em] uppercase text-gold block mb-1">
                   {galleryItems[lightboxIndex].category}

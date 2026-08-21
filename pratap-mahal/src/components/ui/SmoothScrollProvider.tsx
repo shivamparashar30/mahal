@@ -31,7 +31,7 @@ export default function SmoothScrollProvider({ children }: { children: React.Rea
       if (!anchor) return;
       e.preventDefault();
       const id = anchor.getAttribute('href');
-      if (!id) return;
+      if (!id || id === '#') return;
       const el = document.querySelector(id);
       if (el) {
         lenis.scrollTo(el as HTMLElement, { offset: -80, duration: 1.2 });

@@ -46,9 +46,9 @@ export default function Weddings() {
         <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-background" />
         {/* Decorative circles */}
         <div className="absolute inset-0 flex items-center justify-center opacity-[0.03] pointer-events-none">
-          <div className="w-[400px] h-[400px] border border-gold rounded-full" />
-          <div className="absolute w-[300px] h-[300px] border border-gold rounded-full rotate-45" />
-          <div className="absolute w-[200px] h-[200px] border border-gold rounded-full" />
+          <div className="w-[250px] md:w-[400px] h-[250px] md:h-[400px] border border-gold rounded-full" />
+          <div className="absolute w-[180px] md:w-[300px] h-[180px] md:h-[300px] border border-gold rounded-full rotate-45" />
+          <div className="absolute w-[120px] md:w-[200px] h-[120px] md:h-[200px] border border-gold rounded-full" />
         </div>
 
         <motion.div
@@ -58,15 +58,15 @@ export default function Weddings() {
           transition={{ duration: 0.9, ease: [0.23, 1, 0.32, 1] }}
           className="relative text-center px-5 md:px-10 max-w-3xl mx-auto"
         >
-          <span className="section-label block mb-4">Destination Weddings</span>
-          <h2 className="font-serif text-[clamp(2rem,6vw,4.5rem)] text-foreground leading-[1.05] mb-4">
+          <span className="section-label block mb-3 md:mb-4">Destination Weddings</span>
+          <h2 className="font-serif text-[clamp(1.75rem,6vw,4.5rem)] text-foreground leading-[1.05] mb-3 md:mb-4">
             A Royal <span className="text-gradient-gold italic">Celebration</span>
           </h2>
-          <p className="text-sm md:text-base text-foreground/50 max-w-xl mx-auto mb-8 leading-relaxed">
+          <p className="text-sm md:text-base text-foreground/50 max-w-xl mx-auto mb-5 md:mb-8 leading-relaxed">
             Transform your most precious moment into a grand affair befitting royalty.
           </p>
 
-          <div className="flex flex-wrap justify-center gap-8 md:gap-12 mb-8">
+          <div className="flex flex-wrap justify-center gap-6 md:gap-12 mb-6 md:mb-8">
             {stats.map((stat, i) => (
               <motion.div
                 key={stat.label}
@@ -87,7 +87,7 @@ export default function Weddings() {
       </div>
 
       {/* Venue cards */}
-      <div className="mx-auto max-w-[1400px] px-5 md:px-10 lg:px-12 pb-16 md:pb-24">
+      <div className="mx-auto max-w-[1400px] px-5 md:px-10 lg:px-12 pb-10 md:pb-24">
         <div className="grid md:grid-cols-3 gap-4 lg:gap-5">
           {venues.map((venue, i) => (
             <motion.div
@@ -96,7 +96,7 @@ export default function Weddings() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-40px' }}
               transition={{ duration: 0.6, delay: i * 0.1, ease: [0.23, 1, 0.32, 1] }}
-              className="luxury-card group p-5 md:p-6 relative overflow-hidden"
+              className="luxury-card group p-4 md:p-6 relative overflow-hidden"
             >
               <div className="absolute inset-0 bg-gradient-to-br from-gold/0 to-gold/0 group-hover:from-gold/[0.03] group-hover:to-transparent transition-all duration-500 pointer-events-none" />
               <div className="relative">

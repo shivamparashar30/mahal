@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 
 export default function Contact() {
   return (
-    <section id="contact" className="relative py-16 md:py-24 lg:py-32 overflow-hidden">
+    <section id="contact" className="relative py-10 md:py-24 lg:py-32 overflow-hidden">
       <div className="absolute top-0 left-0 w-full h-px gold-line" />
 
       <div className="mx-auto max-w-[1400px] px-5 md:px-10 lg:px-12">
@@ -13,7 +13,7 @@ export default function Contact() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-60px' }}
           transition={{ duration: 0.8, ease: [0.23, 1, 0.32, 1] }}
-          className="text-center mb-10 md:mb-16"
+          className="text-center mb-6 md:mb-16"
         >
           <span className="section-label block mb-3">Reservations</span>
           <h2 className="font-serif text-[clamp(1.75rem,5vw,4rem)] text-foreground mb-4">
@@ -31,10 +31,10 @@ export default function Contact() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: '-40px' }}
             transition={{ duration: 0.8, ease: [0.23, 1, 0.32, 1] }}
-            className="flex flex-col gap-6"
+            className="flex flex-col gap-4 md:gap-6"
           >
             {/* Map placeholder */}
-            <div className="relative aspect-[16/10] rounded-lg overflow-hidden bg-dark-card border border-gold/6 img-placeholder shimmer-overlay">
+            <div className="relative aspect-[16/9] md:aspect-[16/10] rounded-lg overflow-hidden bg-dark-card border border-gold/6 img-placeholder shimmer-overlay">
               <div
                 className="absolute inset-0"
                 style={{

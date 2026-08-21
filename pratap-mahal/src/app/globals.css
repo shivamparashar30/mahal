@@ -293,6 +293,28 @@ canvas {
   font-weight: 400;
 }
 
+/* Mobile: disable hover transforms on cards (no hover on touch) */
+@media (hover: none) {
+  .luxury-card:hover {
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+/* Mobile: compact buttons */
+@media (max-width: 639px) {
+  .btn-gold,
+  .btn-gold-filled {
+    padding: 11px 24px;
+    font-size: 0.65rem;
+  }
+
+  .luxury-input {
+    padding: 10px 14px;
+    font-size: 0.8125rem;
+  }
+}
+
 /* Decorative dot pattern */
 .dot-pattern {
   background-image: radial-gradient(circle at 1px 1px, rgba(201, 169, 110, 0.15) 1px, transparent 0);

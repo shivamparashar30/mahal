@@ -16,7 +16,7 @@ const socialLinks = [
 
 export default function Footer() {
   return (
-    <footer className="relative pt-16 md:pt-20 pb-8 overflow-hidden">
+    <footer className="relative pt-10 md:pt-20 pb-6 md:pb-8 overflow-hidden">
       <div className="absolute top-0 left-0 w-full h-px gold-line" />
 
       <div className="mx-auto max-w-[1400px] px-5 md:px-10 lg:px-12">
@@ -26,12 +26,12 @@ export default function Footer() {
           viewport={{ once: true, margin: '-40px' }}
           transition={{ duration: 0.7 }}
         >
-          <div className="grid grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1fr] gap-8 lg:gap-12 mb-12 md:mb-16">
+          <div className="grid grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1fr] gap-5 md:gap-8 lg:gap-12 mb-8 md:mb-16">
             {/* Brand */}
             <div className="col-span-2 lg:col-span-1">
               <h3 className="font-serif text-xl md:text-2xl tracking-[0.08em] text-gold mb-1">PRATAP MAHAL</h3>
               <span className="text-[8px] tracking-[0.35em] text-muted uppercase block mb-4">by Taj Hotels</span>
-              <p className="text-muted text-sm leading-[1.7] max-w-xs mb-5">
+              <p className="text-muted text-[13px] md:text-sm leading-[1.7] max-w-xs mb-3 md:mb-5">
                 A palace where centuries of royal heritage meet the pinnacle of
                 modern luxury, in the heart of Rajasthan.
               </p>

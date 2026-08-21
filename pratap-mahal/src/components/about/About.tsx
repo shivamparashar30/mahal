@@ -15,7 +15,7 @@ export default function About() {
   const isStatsInView = useInView(statsRef, { once: true, margin: '-80px' });
 
   return (
-    <section id="about" className="relative py-16 md:py-24 lg:py-32 overflow-hidden">
+    <section id="about" className="relative py-10 md:py-24 lg:py-32 overflow-hidden">
       <div className="absolute top-0 left-0 w-full h-px gold-line" />
       <div className="absolute top-1/4 -left-32 w-64 h-64 rounded-full bg-gold/[0.03] blur-[100px] pointer-events-none" />
 
@@ -25,7 +25,7 @@ export default function About() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-60px' }}
           transition={{ duration: 0.8, ease: [0.23, 1, 0.32, 1] }}
-          className="mb-10 md:mb-14"
+          className="mb-6 md:mb-14"
         >
           <span className="section-label block mb-3">About the Palace</span>
           <h2 className="font-serif text-[clamp(1.75rem,5vw,4rem)] text-foreground leading-[1.1] max-w-4xl">
@@ -33,7 +33,7 @@ export default function About() {
           </h2>
         </motion.div>
 
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-14 items-start">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-14 items-center">
           {/* Image */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
@@ -43,29 +43,16 @@ export default function About() {
             className="relative"
           >
             <div className="absolute -left-3 md:-left-5 top-0 w-[1px] h-full bg-gradient-to-b from-gold via-gold/20 to-transparent" />
-            <div className="relative overflow-hidden aspect-[4/3] md:aspect-[4/5] lg:aspect-[3/4] rounded-md bg-dark-card">
-              <div
-                className="absolute inset-0"
-                style={{
-                  background: `
-                    radial-gradient(ellipse at 30% 25%, rgba(201,169,110,0.15) 0%, transparent 50%),
-                    radial-gradient(ellipse at 70% 75%, rgba(160,120,60,0.08) 0%, transparent 45%),
-                    radial-gradient(circle at 50% 50%, rgba(28,26,20,1) 0%, rgba(11,10,8,1) 100%)
-                  `,
-                }}
+            <div className="relative overflow-hidden aspect-[3/4] md:aspect-[3/4] lg:aspect-[4/5] rounded-md bg-dark-card">
+              <img
+                src="/images/about.jpg"
+                alt="Pratap Mahal palace exterior"
+                className="absolute inset-0 w-full h-full object-cover"
+                loading="lazy"
               />
-              <div className="absolute inset-0 opacity-[0.06]" style={{
-                backgroundImage: `
-                  repeating-linear-gradient(0deg, transparent, transparent 40px, rgba(201,169,110,0.3) 40px, rgba(201,169,110,0.3) 41px),
-                  repeating-linear-gradient(90deg, transparent, transparent 40px, rgba(201,169,110,0.3) 40px, rgba(201,169,110,0.3) 41px)
-                `,
-              }} />
-              <div className="absolute top-5 left-5 w-10 h-10 border-l border-t border-gold/25" />
-              <div className="absolute bottom-5 right-5 w-10 h-10 border-r border-b border-gold/25" />
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-20 h-20 border border-gold/10 rotate-45" />
-              </div>
-              <div className="absolute bottom-0 left-0 right-0 p-5 bg-gradient-to-t from-background/90 via-background/40 to-transparent">
+              <div className="absolute top-4 left-4 w-8 h-8 border-l border-t border-white/20" />
+              <div className="absolute bottom-4 right-4 w-8 h-8 border-r border-b border-white/20" />
+              <div className="absolute bottom-0 left-0 right-0 p-5 bg-gradient-to-t from-background/80 via-background/30 to-transparent">
                 <span className="text-[10px] tracking-[0.3em] uppercase text-gold/60">Est. 1803</span>
               </div>
             </div>
@@ -77,7 +64,7 @@ export default function About() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: '-60px' }}
             transition={{ duration: 0.9, delay: 0.15, ease: [0.23, 1, 0.32, 1] }}
-            className="flex flex-col gap-4 lg:pt-4"
+            className="flex flex-col gap-3 md:gap-4 lg:pt-4"
           >
             <p className="text-base md:text-lg text-foreground/80 leading-[1.8] font-light">
               Nestled in the golden sands of Rajasthan, Pratap Mahal stands as a
@@ -98,7 +85,7 @@ export default function About() {
 
             <div className="w-12 h-[1px] bg-gold/30 my-1" />
 
-            <blockquote className="font-serif text-lg md:text-xl text-gold/60 italic leading-relaxed">
+            <blockquote className="font-serif text-base md:text-xl text-gold/60 italic leading-relaxed">
               &ldquo;Where history breathes and luxury lives&rdquo;
             </blockquote>
           </motion.div>
@@ -117,7 +104,7 @@ export default function About() {
               transition={{ duration: 0.6, delay: i * 0.1, ease: [0.23, 1, 0.32, 1] }}
               className="text-center md:text-left"
             >
-              <span className="font-serif text-2xl md:text-3xl lg:text-4xl text-gradient-gold block mb-1">
+              <span className="font-serif text-xl md:text-3xl lg:text-4xl text-gradient-gold block mb-1">
                 {stat.value}
               </span>
               <span className="text-[10px] tracking-[0.2em] uppercase text-muted font-light">

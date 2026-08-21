@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useRef, useState, useCallback } from 'react';
-import { gsap } from '@/lib/gsap';
 import { AnimatePresence, motion } from 'framer-motion';
 
 const navLinks = [
@@ -18,7 +17,7 @@ export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('#hero');
-  const navRef = useRef<HTMLElement>(null);
+
 
   useEffect(() => {
     const handleScroll = () => {
@@ -47,20 +46,11 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', updateActiveSection);
   }, [updateActiveSection]);
 
-  useEffect(() => {
-    if (!navRef.current) return;
-    const ctx = gsap.context(() => {
-      gsap.from(navRef.current, {
-        y: -80, opacity: 0, duration: 1.2, delay: 0.3, ease: 'power3.out',
-      });
-    }, navRef);
-    return () => ctx.revert();
-  }, []);
+  // Navbar visibility is handled via CSS transitions — no GSAP animation needed
 
   return (
     <>
       <nav
-        ref={navRef}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out ${
           isScrolled ? 'glass-strong pt-3 pb-3' : 'pt-7 pb-5 md:pt-8 md:pb-6'
         }`}
@@ -142,7 +132,7 @@ export default function Navbar() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.35 }}
-            className="fixed inset-0 z-40 bg-background/97 backdrop-blur-2xl flex flex-col items-center justify-center gap-7"
+            className="fixed inset-0 z-40 bg-background/97 backdrop-blur-2xl flex flex-col items-center justify-center gap-5 md:gap-7"
           >
             {navLinks.map((link, i) => (
               <motion.a

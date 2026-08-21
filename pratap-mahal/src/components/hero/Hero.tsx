@@ -129,7 +129,7 @@ export default function Hero() {
   }, [isLoaded, drawFrame]);
 
   return (
-    <section id="hero" ref={sectionRef} className="relative h-[250vh] md:h-[400vh] w-full">
+    <section id="hero" ref={sectionRef} className="relative h-[200vh] md:h-[400vh] w-full">
       {/* Sticky viewport — pinned via CSS, no ScrollTrigger pin */}
       <div className="sticky top-0 h-screen w-full overflow-hidden">
         <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" />
@@ -152,14 +152,14 @@ export default function Hero() {
               transition={{ duration: 0.8, ease: 'easeInOut' }}
               className="absolute inset-0 z-30 bg-background flex flex-col items-center justify-center"
             >
-              <div className="flex flex-col items-center gap-8">
+              <div className="flex flex-col items-center gap-5 md:gap-8">
                 <div className="text-center">
-                  <h2 className="font-serif text-3xl md:text-5xl tracking-[0.1em] text-gold mb-2">
+                  <h2 className="font-serif text-2xl md:text-5xl tracking-[0.1em] text-gold mb-2">
                     PRATAP MAHAL
                   </h2>
                   <p className="text-[10px] tracking-[0.4em] text-muted uppercase">by Taj</p>
                 </div>
-                <div className="relative w-48 h-[1.5px] bg-dark-secondary rounded-full overflow-hidden">
+                <div className="relative w-36 md:w-48 h-[1.5px] bg-dark-secondary rounded-full overflow-hidden">
                   <motion.div
                     className="absolute top-0 left-0 h-full bg-gradient-to-r from-gold-dark via-gold to-gold-light rounded-full"
                     initial={{ width: '0%' }}
